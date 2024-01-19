@@ -10,23 +10,22 @@ import { ScrollToTop } from '@/components/ScrollToTop'
 const inter = Inter({ subsets: ['latin'] })
 const customChain = {
   // Required information for connecting to the network
-  chainId: 1315925, // Chain ID of the network
-  rpc: ["https://rpcevm.dymension.sipalingtestnet.com/"], // Array of RPC URLs to use
+  chainId: 4338147, // Chain ID of the network
+  rpc: ["https://evm-kynhub.kynraze.com/"], // Array of RPC URLs to use
 
   // Information for adding the network to your wallet (how it will appear for first time users) === \\
   // Information about the chain's native currency (i.e. the currency that is used to pay for gas)
   nativeCurrency: {
     decimals: 18,
-    name: "SIPALING TESTNET",
-    symbol: "SPT",
+    name: "Kynraze",
+    symbol: "KYN",
   },
-  shortName: "SPT", // Display value shown in the wallet UI
-  slug: "SPT", // Display value shown in the wallet UI
+  shortName: "KYN", // Display value shown in the wallet UI
+  slug: "KYN", // Display value shown in the wallet UI
   testnet: true, // Boolean indicating whether the chain is a testnet or mainnet
-  chain: "SPT", // Name of the network
-  name: "SIPALING TESTNET", // Name of the network
-  image: "https://i.imgur.com/pKqKnNd.png" // URL of the image
-
+  chain: "KYN", // Name of the network
+  name: "Kynraze", // Name of the network
+  image: "https://hub.kynraze.com/_next/image?url=%2Ftoken.png&w=48&q=75" // URL of the image
 };
 
 

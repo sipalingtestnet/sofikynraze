@@ -18,7 +18,7 @@ export const ConnectNetwork = () => {
     // Check if the user is connected to the wrong network
     if (isMismatched) {
       // Prompt their wallet to switch networks
-      switchChain(1315925); // Chain ID for sipaling testnet
+      switchChain(4338147); // Chain ID for sipaling testnet
     }
   }, [address]); // This above block gets run every time "address" changes (e.g. when the user connects)
 

@@ -26,7 +26,7 @@ const customChain = {
   testnet: true, // Boolean indicating whether the chain is a testnet or mainnet
   chain: "KYN", // Name of the network
   name: "Kynraze", // Name of the network
-  image: "https://i.imgur.com/lORcFGY.png" // URL of the image
+  image: "https://hub.kynraze.com/_next/image?url=%2Ftoken.png&w=48&q=75" // URL of the image
 };
 
 export default function RootLayout({ children }) {
@@ -48,7 +48,7 @@ export default function RootLayout({ children }) {
         <title> Kynraze Social </title>
         <meta name='viewport' content='minimum-scale=1, initial-scale=1, width=device-width' />
         <meta name='description' content="SocialFi" />
-        <link rel="icon" type="image/png" href="https://i.imgur.com/lORcFGY.png" />
+        <link rel="icon" type="image/png" href="https://hub.kynraze.com/_next/image?url=%2Ftoken.png&w=48&q=75" />
       </head>
       <body className={inter.className}>
         {isLoading ? (

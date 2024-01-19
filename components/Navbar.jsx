@@ -38,7 +38,7 @@ export function Navbar () {
                 <Title
                   size='h3'
                 >
-                 SIPALING SOFI
+                 Kynraze Social
                 </Title>
               </Group>
             </Link>
