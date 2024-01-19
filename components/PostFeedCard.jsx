@@ -75,7 +75,7 @@ export function PostFeedCard ({ id }) {
   <Link href={`/profile/${author}`} style={{ marginRight: '10px' }}>
     <Avatar radius='md'>
       <Text style={{ fontSize: '1rem' }}>
-        <img src="https://i.imgur.com/h4rohuA.png" alt="Foto" width="45"></img>
+        <img src="https://i.imgur.com/eMhTL1A.pngg" alt="Foto" width="45"></img>
         {author && ``}
         <br></br>
       </Text>

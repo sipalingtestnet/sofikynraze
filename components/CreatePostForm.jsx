@@ -28,12 +28,14 @@ export function CreatePostForm () {
   const { mutateAsync: upload } = useStorageUpload()
 
   return (
+
     <Box
     mx='auto'
     p='md'
     style={{
-      border: '1px solid #feb48c',
-      borderRadius: '4px' // Adjust the value as per your preference
+      border: '1px solid #8e197e',
+      borderRadius: '16px', // Adjust the value as per your preference
+      marginTop: '35px' // Adjust the value as per your preference
     }}
     
   >
@@ -45,7 +47,7 @@ export function CreatePostForm () {
   wrapperProps={{
     px: 'sm',
     style: {
-      border: '1px solid #feb48c',
+      border: '1px solid #8e197e',
       borderRadius: '4px' // Atur nilai sesuai keinginan Anda
     }
   }}

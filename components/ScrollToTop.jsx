@@ -11,7 +11,7 @@ export function ScrollToTop () {
         {(transitionStyles) => (
       <Button
   leftIcon={<IconArrowUp size='1rem' />}
-  style={{ ...transitionStyles, backgroundColor: '#feb48c' }}
+  style={{ ...transitionStyles, backgroundColor: '#8e197e' }}
   onClick={() => scrollTo({ y: 0 })}
   color="white"
 >

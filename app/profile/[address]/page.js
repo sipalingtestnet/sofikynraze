@@ -1,104 +1,91 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { Inter } from 'next/font/google'
-import { ThirdwebProvider } from '@thirdweb-dev/react'
-import { Container, MantineProvider } from '@mantine/core'
-import { Navbar } from '@/components/Navbar'
-import { Notifications } from '@mantine/notifications'
-import { ScrollToTop } from '@/components/ScrollToTop'
+import { PostsByUser } from '@/components/PostsByUser'
+import { TipUser } from '@/components/TipUser'
+import { useSocialMediaContractRead } from '@/hooks/useSocialMediaContract'
+import { Container, Text, Avatar, Skeleton, Stack, Grid, Group } from '@mantine/core'
+import { useAddress } from '@thirdweb-dev/react'
+import { formatEther } from 'ethers/lib/utils'
+import { usePathname } from 'next/navigation'
 
-const inter = Inter({ subsets: ['latin'] })
-const customChain = {
-  // Required information for connecting to the network
-  chainId: 4338147, // Chain ID of the network
-  rpc: ["https://evm-kynhub.kynraze.com/"], // Array of RPC URLs to use
+export default function Profile() {
+  const pathname = usePathname()
+  const address = pathname.substring(9)
+  const currentUserAddress = useAddress()
 
-  // Information for adding the network to your wallet (how it will appear for first time users) === \\
-  // Information about the chain's native currency (i.e. the currency that is used to pay for gas)
-  nativeCurrency: {
-    decimals: 18,
-    name: "Kynraze",
-    symbol: "KYN",
-  },
-  shortName: "KYN", // Display value shown in the wallet UI
-  slug: "KYN", // Display value shown in the wallet UI
-  testnet: true, // Boolean indicating whether the chain is a testnet or mainnet
-  chain: "KYN", // Name of the network
-  name: "Kynraze", // Name of the network
-  image: "https://hub.kynraze.com/_next/image?url=%2Ftoken.png&w=48&q=75" // URL of the image
-};
+  const { data, isLoading } = useSocialMediaContractRead('users', [address])
 
-export default function RootLayout({ children }) {
-  const [isLoading, setIsLoading] = useState(true)
+  const followerCount = typeof data?.followerCount !== 'undefined' && Number(data.followerCount)
+  const followingCount = typeof data?.followingCount !== 'undefined' && Number(data.followingCount)
+  const postCount = typeof data?.postCount !== 'undefined' && Number(data.postCount)
+  const tipsReceived =
+    typeof data?.tipsReceived !== 'undefined' && Number(formatEther(data.tipsReceived))
 
-  useEffect(() => {
-    // Simulasikan waktu loading dengan setTimeout
-    const timeout = setTimeout(() => {
-      setIsLoading(false)
-    }, 50)
-
-    // Membersihkan timeout jika komponen unmount
-    return () => clearTimeout(timeout)
-  }, [])
+  const isOwnProfile = address === currentUserAddress
 
   return (
-    <html>
-      <head>
-        <title> Kynraze Social </title>
-        <meta name='viewport' content='minimum-scale=1, initial-scale=1, width=device-width' />
-        <meta name='description' content="SocialFi" />
-        <link rel="icon" type="image/png" href="https://hub.kynraze.com/_next/image?url=%2Ftoken.png&w=48&q=75" />
-      </head>
-      <body className={inter.className}>
-        {isLoading ? (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '100vh',
-            }}
-          >
-            <div>Loading...</div>
-          </div>
-        ) : (
-          // Tampilkan konten setelah loading selesai
-          <ThirdwebProvider
-            clientId="148761a18cbd109a38a8071a43a9fccc"
-            activeChain={customChain}
-          >
-            <MantineProvider
-              withGlobalStyles
-              withNormalizeCSS
-              theme={{
-                colorScheme: 'light',
-                globalStyles: (theme) => ({
-                  a: {
-                    textDecoration: 'none !important',
-                    color: 'inherit !important'
-                  },
-                  '.button': {
-                    background: '#feb48c !important',
-                    color: 'white !important',
-                    ':disabled': {
-                      background: '#feb48c !important',
-                      color: '#B8B8B8 !important'
-                    }
-                  }
-                })
-              }}
-            >
-              <Notifications />
-              <Container size='65rem' px='s'>
-                <Navbar />
-                {children}
-              </Container>
-              <ScrollToTop />
-            </MantineProvider>
-          </ThirdwebProvider>
-        )}
-      </body>
-    </html>
+    <main>
+  <Container size={600} colorScheme="light" color="orange" border="2px solid #8e197e">
+        <Stack align='center'>
+          <Avatar size='xl' radius='md' my='sm' color="white">
+            <Text size='sm'>
+              <img src="https://i.imgur.com/eMhTL1A.png" alt="Foto" width="100"></img>
+            </Text>
+          </Avatar>
+
+          <Text size='sm' fw={700} color="white">
+            {address}
+          </Text>
+
+          <Group align='center'>
+            <Group fw={700} color="white">
+              {isOwnProfile ? (
+                <>
+                  <Text>{'Earnings: '}</Text>
+                  <Skeleton visible={isLoading} w='3rem' ta='center' mx='auto' color="white">
+                    <Text color="white">{parseFloat(tipsReceived).toFixed(3)}</Text>
+                  </Skeleton>
+                  <Text ta='center' color="white">KYN{tipsReceived > 1 ? 's' : ''}</Text>
+                </>
+              ) : (
+                <TipUser userAddress={address} />
+              )}
+            </Group>
+     
+          </Group>
+        </Stack>
+
+        <Grid my='lg' fw={700}>
+        <Grid.Col span={4} color="white" border="1px solid #8e197e">
+            <Skeleton visible={isLoading} w='1rem' h='1rem' mb='sm' ta='center' mx='auto' color="white">
+              <Text color="white">{postCount}</Text>
+            </Skeleton>
+            <Text ta='center' color="white">
+              {`Post${postCount > 1 ? 's' : ''}`}
+            </Text>
+          </Grid.Col>
+
+          <Grid.Col span={4} color="white" border="1px solid #8e197e">
+            <Skeleton visible={isLoading} w='1rem' h='1rem' mb='sm' ta='center' mx='auto' color="white">
+              <Text color="white">{followerCount}</Text>
+            </Skeleton>
+            <Text ta='center' color="white">
+              {`Follower${followerCount > 1 ? 's' : ''}`}
+            </Text>
+          </Grid.Col>
+
+          <Grid.Col span={4} color="white" border="1px solid #8e197e">
+            <Skeleton visible={isLoading} w='1rem' h='1rem' mb='sm' ta='center' mx='auto' color="white">
+              <Text color="white">{followingCount}</Text>
+            </Skeleton>
+            <Text ta='center' color="white">
+              Following
+            </Text>
+          </Grid.Col>
+        </Grid>
+
+        <PostsByUser address={address} />
+      </Container>
+    </main>
   )
 }

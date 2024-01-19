@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { Inter } from 'next/font/google'
 import { ThirdwebProvider } from '@thirdweb-dev/react'
 import { Container, MantineProvider } from '@mantine/core'
@@ -28,50 +29,75 @@ const customChain = {
   image: "https://hub.kynraze.com/_next/image?url=%2Ftoken.png&w=48&q=75" // URL of the image
 };
 
+export default function RootLayout({ children }) {
+  const [isLoading, setIsLoading] = useState(true)
 
-export default function RootLayout ({ children }) {
+  useEffect(() => {
+    // Simulasikan waktu loading dengan setTimeout
+    const timeout = setTimeout(() => {
+      setIsLoading(false)
+    }, 50)
+
+    // Membersihkan timeout jika komponen unmount
+    return () => clearTimeout(timeout)
+  }, [])
+
   return (
     <html>
       <head>
-        <title>kit-t's social media</title>
+        <title>Kynraze Social</title>
         <meta name='viewport' content='minimum-scale=1, initial-scale=1, width=device-width' />
-        <meta name='description' content="Submission for StackUp's Social Media dapp bounty" />
+        <meta name='description' content="SocialFi" />
+        <link rel="icon" type="image/png" href="https://i.imgur.com/eMhTL1A.png" />
       </head>
-      <body className={inter.className}>
-        <ThirdwebProvider
-          clientId="148761a18cbd109a38a8071a43a9fccc"
-          activeChain={customChain}
-        >
-          <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-              colorScheme: 'light',
-              globalStyles: (theme) => ({
-                a: {
-                  textDecoration: 'none !important',
-                  color: 'inherit !important'
-                },
-
-                '.button': {
-                  background: '#feb48c !important',
-                  color: 'white !important',
-                  ':disabled': {
-                    background: '#feb48c !important',
-                    color: '#B8B8B8 !important'
-                  }
-                }
-              })
-            }}
+      <body className={'inter ' + (isLoading ? 'dark' : '')} style={{ backgroundColor: isLoading ? '#000' : 'initial', color: isLoading ? '#fff' : 'initial' }}>
+  {isLoading ? (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+      }}
+    >
+      <div>Loading...</div>
+          </div>
+        ) : (
+          // Tampilkan konten setelah loading selesai
+          <ThirdwebProvider
+            clientId="148761a18cbd109a38a8071a43a9fccc"
+            activeChain={customChain}
           >
-            <Notifications />
-            <Container size='65rem' px='s'>
-              <Navbar />
-              {children}
-            </Container>
-            <ScrollToTop />
-          </MantineProvider>
-        </ThirdwebProvider>
+            <MantineProvider
+              withGlobalStyles
+              withNormalizeCSS
+              theme={{
+                colorScheme: 'dark',
+                globalStyles: (theme) => ({
+                  a: {
+                    textDecoration: 'none !important',
+                    color: 'inherit !important'
+                  },
+                  '.button': {
+                    background: '#8e197e !important',
+                    color: 'white !important',
+                    ':disabled': {
+                      background: '#8e197e !important',
+                      color: '#B8B8B8 !important'
+                    }
+                  }
+                })
+              }}
+            >
+              <Notifications />
+              <Container size='65rem' px='s'>
+                <Navbar />
+                {children}
+              </Container>
+              <ScrollToTop />
+            </MantineProvider>
+          </ThirdwebProvider>
+        )}
       </body>
     </html>
   )

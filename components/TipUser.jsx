@@ -42,8 +42,8 @@ export function TipUser ({ userAddress }) {
             precision={3}
             formatter={(value) =>
               !Number.isNaN(parseFloat(value))
-                ? `${value} SPT`
-                : '0 SPT'}
+                ? `${value} KYN`
+                : '0 KYN'}
             {...form.getInputProps('amount')}
           />
 
@@ -85,7 +85,7 @@ export function TipUser ({ userAddress }) {
         </Box>
       </Modal>
       <Group position='center'>
-  <Button onClick={open} bg="#feb48c" color="white">Wanna Tip Me? 😉</Button>
+  <Button onClick={open} bg="#8e197e" color="white">Wanna Tip Me? 😉</Button>
 </Group>
     </>
   )

@@ -60,7 +60,7 @@ export function Navbar () {
                           fontSize: '0.65rem'
                         }}
                       >
-                        {currentUserAddress && `${currentUserAddress.substring(0, 3)}...${currentUserAddress.substring(currentUserAddress.length - 2)}`}
+                         <img src="https://i.imgur.com/eMhTL1A.png" alt="Foto" width="45"></img>
                       </Text>
                     </Avatar>
                   </Link>
@@ -106,7 +106,7 @@ export function Navbar () {
                         fontSize: '0.65rem'
                       }}
                     >
-                      {currentUserAddress && `${currentUserAddress.substring(0, 3)}...${currentUserAddress.substring(currentUserAddress.length - 2)}`}
+                  
                     </Text>
                   </Avatar>
                 </Link>
